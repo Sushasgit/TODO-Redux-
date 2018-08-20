@@ -1,0 +1,17 @@
+.container {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.content {
+    background-color: #d0d5de;
+    padding: 28px;
+}
+
+.todoList {
+    min-height: 500px;
+    background-color: #fff;
+    border-radius: 9px;
+    box-shadow: 0 5.5px 17px 0 rgba(208, 213, 222, 0.49);
+    margin-top: 12px;
+}

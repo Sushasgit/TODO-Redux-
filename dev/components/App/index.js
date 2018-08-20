@@ -1,12 +1,21 @@
 import React from 'react';
 
-import './App.css';
+import style from './App.css';
+import Header from '../Header/index';
 
 class App extends React.Component {
   render() {
       return (
-          <div>
-            TODO
+          <div className={style.content}>
+              <div className={style.container}>
+                  <Header />
+              </div>
+
+              <div className={style.container}>
+                  <div className={style.todoList}>
+                      teat
+                  </div>
+              </div>
           </div>
           );
     }
