@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import style from './header.css';
 
 import { addTodoItem } from '../../actions';
+import PieChartTodo from '../PieChartTodo';
 
 class Header extends React.Component {
     constructor(props) {
@@ -14,7 +16,14 @@ class Header extends React.Component {
                 text: '',
                 complete: false,
                 priority: 'low',
+                pieChartData: [],
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.todoList) {
+            this.setState({ pieChartData: this.countPriorities(nextProps.todoList) });
+        }
     }
 
     onSubmit(event) {
@@ -33,9 +42,26 @@ class Header extends React.Component {
         this.setState({ text: '' });
     }
 
+    countPriorities(todoList) {
+       const result = [];
+       result.push({
+           name: 'low',
+           value: todoList.filter(todo => todo.priority === 'low').length,
+       });
+
+        result.push({
+            name: 'medium',
+            value: todoList.filter(todo => todo.priority === 'medium').length,
+        });
+
+        result.push({
+            name: 'high',
+            value: todoList.filter(todo => todo.priority === 'high').length,
+        });
+        return result;
+    }
     render() {
-        console.log('priority',this.props.priority);
-        const { text } = this.state;
+        const { text, pieChartData } = this.state;
         return (
             <header className={style.header}>
                 <img src="http://icons-for-free.com/free-icons/png/512/1622833.png" alt="" />
@@ -54,10 +80,7 @@ class Header extends React.Component {
                         </form>
                     </li>
                     <li>
-                        Done
-                    </li>
-                    <li>
-                        Deleted
+                        <PieChartTodo data={pieChartData} />
                     </li>
                 </ul>
             </header>
@@ -73,11 +96,20 @@ function mapStateToProps(state) {
     });
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addTodo: todo => dispatch(addTodoItem(todo)),
-    };
+const mapDispatchToProps = dispatch => ({
+    addTodo: todo => dispatch(addTodoItem(todo)),
+});
+
+Header.propTypes = {
+    todoList: PropTypes.array,
+    addTodo: PropTypes.func,
 };
+
+Header.defaultProps = {
+    addTodo: () => {},
+    todoList: [],
+};
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps,

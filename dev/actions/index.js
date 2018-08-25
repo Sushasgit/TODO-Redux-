@@ -1,11 +1,27 @@
 import { todosRef, priorityRef } from '../firebase';
 
-export function addTodo(todo) {
+export const addTodo = (todo) => {
     return {
         type: 'ADD_TODO',
         todo,
     };
 }
+
+export const editTodo = (id, updates) => {
+    return {
+        type: 'EDIT_TODO',
+        id,
+        updates,
+    };
+};
+
+export const setVisibleList = (filter) => {
+    return {
+        type: 'FILTER',
+        filter,
+    };
+};
+
 
 export const addTodoItem = todo => (dispatch) => {
     return todosRef.push(todo).then((ref) => {
@@ -14,6 +30,50 @@ export const addTodoItem = todo => (dispatch) => {
             ...todo,
         }));
     });
+};
+
+export const editTodoItem = (id, updates) => {
+    return (dispatch) => {
+        const todoRef = todosRef.child(`/${id}`);
+        const newTodo = {
+            priority: updates.newPriority,
+            text: updates.newText,
+        };
+        dispatch({
+            type: 'EDIT_TODO',
+            id,
+            newTodo,
+        });
+        return todoRef.update(newTodo);
+    };
+};
+
+export const completeTodoItem = (id, isComplete) => {
+    return (dispatch) => {
+        const todoRef = todosRef.child(`/${id}`);
+        const newTodo = {
+            complete: isComplete,
+        };
+        dispatch({
+            type: 'TOGGLE_TODO',
+            id,
+            isComplete,
+        });
+
+        return todoRef.update(newTodo);
+    };
+};
+
+export const deleteTodoItem = (id) => {
+    return (dispatch) => {
+        const todoRef = todosRef.child(`/${id}`);
+
+        dispatch({
+            type: 'DELETE_TODO',
+            id,
+        });
+        return todoRef.remove();
+    }
 };
 
 export const getAllTodos = () => (dispatch) => {

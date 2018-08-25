@@ -1,34 +1,33 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import TodoItem from '../TodoItem';
 import style from './todoList.css';
 
 class TodoList extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-        const { text } = this.props;
+        const { data } = this.props;
         return (
             <div className={style.container}>
-                {this.props.todoList && this.props.todoList.map((todo) => (
-                   <TodoItem key={todo.id} priorityValue={todo.priority} id={todo.id} text={todo.text}/>
+                {data && data.map(todo => (
+                    <TodoItem
+                      key={todo.id}
+                      priorityValue={todo.priority}
+                      id={todo.id}
+                      text={todo.text}
+                      complete={todo.complete}
+                    />
                 ))}
             </div>
         );
     }
 }
 
-function mapStateToProps(state) {
-    return ({
-        todoList: state.todos.todoList,
-        todoItem: state.todos.todoItem,
-    });
-}
+TodoList.propTypes = {
+    data: PropTypes.array,
+};
 
+TodoList.defaultProps = {
+    data: [],
+};
 
-export default connect(
-    mapStateToProps,
-    null,
-)(TodoList);
+export default TodoList;

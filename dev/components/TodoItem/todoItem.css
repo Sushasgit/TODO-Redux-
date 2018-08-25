@@ -3,9 +3,39 @@
     border-radius: 15px;
     background-color: #fff;
     padding: 10px;
+    position: relative;
 }
 
 .todoItemWrap {
     display: flex;
     align-items: center;
+}
+
+.todoItemEdit {
+    background-color: #f5a623;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    right: 14px;
+}
+
+.todoItemDelete {
+    bottom: 10px;
+    right: 14px;
+    background-color: #f5a623;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.completed {
+    filter: grayscale(1);
+}
+
+.todoItemEdit img,
+.todoItemDelete img{
+    width: 18px;
 }

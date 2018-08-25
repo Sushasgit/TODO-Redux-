@@ -1,38 +1,32 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import style from './App.css';
 import Header from '../Header/index';
 import { getAllTodos, getAllPriority } from '../../actions';
 import TodoList from '../TodoList';
+import FilterPanel from '../FilterPanel';
 
 class App extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            todos: [],
-            inputValue: "",
-            flag: false,
-            editObj: {},
-            editIndex:""
-        }
-    }
-
     componentWillMount() {
-        this.props.getAllTodos();
-        this.props.getPriority();
+        const { getAllList, getPriorityList } = this.props;
+        getAllList();
+        getPriorityList();
     }
 
   render() {
+      const { todoList, priority } = this.props;
       return (
           <div className={style.content}>
               <div className={style.container}>
                   <Header />
+                  <FilterPanel />
               </div>
 
               <div className={style.container}>
                   <div className={style.todoList}>
-                      <TodoList />
+                      <TodoList priority={priority} data={todoList} />
                   </div>
               </div>
           </div>
@@ -40,22 +34,46 @@ class App extends React.Component {
     }
 }
 
+const getVisibleTodos = (todos, filter) => {
+    switch (filter) {
+        case 'ALL':
+            return todos;
+        case 'COMPLETED':
+            return todos.filter(t => t.complete);
+        case 'ACTIVE':
+            return todos.filter(t => !t.complete);
+        default:
+            return todos;
+    }
+};
 
 function mapStateToProps(state) {
     return ({
-        todoList: state.todos.todoList,
+        todoList: getVisibleTodos(state.todos.todoList, state.filter),
         todoItem: state.todos.todoItem,
+        priority: state.todos.priority,
     });
 }
+
 function mapDispatchToProp(dispatch) {
     return ({
-        addData: (cloneTodosArray) => { dispatch(addData(cloneTodosArray)) },
-        getAllTodos: () => { dispatch(getAllTodos()) },
-        getPriority: () => { dispatch(getAllPriority()) },
-        deleteTodo: (todoKey,index)=>{dispatch(deleteTodo(todoKey,index))},
-        editTodo: (todoKey,index)=>{dispatch(editTodo(todoKey,index))}
-
-    })
+        getAllList: () => { dispatch(getAllTodos()); },
+        getPriorityList: () => { dispatch(getAllPriority()); },
+    });
 }
+
+App.propTypes = {
+    getAllList: PropTypes.func,
+    getPriorityList: PropTypes.func,
+    priority: PropTypes.array,
+    todoList: PropTypes.array,
+};
+
+App.defaultProps = {
+    getAllList: () => {},
+    getPriorityList: () => {},
+    priority: [],
+    todoList: [],
+};
 
 export default connect(mapStateToProps, mapDispatchToProp)(App);
