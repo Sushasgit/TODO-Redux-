@@ -1,16 +1,57 @@
 import React from 'react';
-
+import { connect } from 'react-redux';
 import style from './header.css';
 
+import { addTodoItem } from '../../actions';
+
 class Header extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.onSubmit = this.onSubmit.bind(this);
+
+        this.state = {
+                text: '',
+                complete: false,
+                priority: 'low',
+        };
+    }
+
+    onSubmit(event) {
+        event.preventDefault();
+        const { text, complete, priority } = this.state;
+        const { addTodo } = this.props;
+        const todo = {
+            text,
+            complete,
+            priority,
+        };
+
+        if (text) {
+            addTodo(todo);
+        }
+        this.setState({ text: '' });
+    }
+
     render() {
+        console.log('priority',this.props.priority);
+        const { text } = this.state;
         return (
             <header className={style.header}>
                 <img src="http://icons-for-free.com/free-icons/png/512/1622833.png" alt="" />
-
                 <ul>
                     <li>
-                        Todo
+                        <form onSubmit={this.onSubmit}>
+                            <input
+                              type="text"
+                              placeholder="Add task"
+                              value={text}
+                              onChange={event => this.setState({ text: event.target.value })}
+                            />
+                            <button type="submit">
+                                Add
+                            </button>
+                        </form>
                     </li>
                     <li>
                         Done
@@ -24,4 +65,20 @@ class Header extends React.Component {
     }
 }
 
-export default Header;
+function mapStateToProps(state) {
+    return ({
+        todoList: state.todos.todoList,
+        todoItem: state.todos.todoItem,
+        priority: state.todos.priority,
+    });
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addTodo: todo => dispatch(addTodoItem(todo)),
+    };
+};
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Header);
