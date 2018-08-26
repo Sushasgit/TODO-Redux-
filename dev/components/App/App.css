@@ -6,6 +6,7 @@
 .content {
     background-color: #d0d5de;
     padding: 28px;
+    height: 100vh;
 }
 
 .todoList {

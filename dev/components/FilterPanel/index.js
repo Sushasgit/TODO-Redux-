@@ -4,15 +4,17 @@ import { connect } from 'react-redux';
 
 import { setVisibleList } from '../../actions';
 
+import style from './filters.css';
+
 const FilterPanel = props => (
-    <div>
-        <button type="button" onClick={() => { props.onFilterClick('SHOW_ALL'); }}>
+    <div className={style.filterPanel}>
+        <button className={style.filterBtn} type="button" onClick={() => { props.onFilterClick('SHOW_ALL'); }}>
             All
         </button>
-        <button type="button" onClick={() => { props.onFilterClick('SHOW_COMPLETED'); }}>
+        <button className={style.filterBtn} type="button" onClick={() => { props.onFilterClick('SHOW_COMPLETED'); }}>
             Completed
         </button>
-        <button type="button" onClick={() => { props.onFilterClick('SHOW_ACTIVE'); }}>
+        <button className={style.filterBtn} type="button" onClick={() => { props.onFilterClick('SHOW_ACTIVE'); }}>
             Active
         </button>
     </div>

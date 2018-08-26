@@ -36,11 +36,9 @@ class App extends React.Component {
 
 const getVisibleTodos = (todos, filter) => {
     switch (filter) {
-        case 'ALL':
-            return todos;
-        case 'COMPLETED':
+        case 'SHOW_COMPLETED':
             return todos.filter(t => t.complete);
-        case 'ACTIVE':
+        case 'SHOW_ACTIVE':
             return todos.filter(t => !t.complete);
         default:
             return todos;

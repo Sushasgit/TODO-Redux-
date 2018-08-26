@@ -80,7 +80,7 @@ class TodoItem extends React.Component {
                             <form onSubmit={this.editTodo}>
                                 <input onChange={this.hadleChange} name="newText" value={newText} />
                                 <select onChange={this.hadleChange} name="newPriority">
-                                    <option selected disabled value="">
+                                    <option defaultValue disabled value="">
                                         Choose
                                     </option>
                                     {priority.map(priorityOption => (
@@ -89,13 +89,14 @@ class TodoItem extends React.Component {
                                         </option>
                                     ))}
                                 </select>
-
-                                <button type="button" onClick={() => { this.setState({ isEdit: false }); }}>
-                                    Cancel
-                                </button>
-                                <button type="submit">
-                                    Save
-                                </button>
+                                <div className={style.btnContainer}>
+                                    <button type="button" onClick={() => { this.setState({ isEdit: false }); }}>
+                                        Cancel
+                                    </button>
+                                    <button type="submit">
+                                        Save
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     )

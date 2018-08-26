@@ -1,0 +1,14 @@
+.filterPanel {
+    padding: 20px 0;
+}
+.filterBtn {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+    width: 20%;
+    font-weight: bold;
+    margin-right: 15px;
+    font: 16px 'Montserrat', sans-serif;
+}

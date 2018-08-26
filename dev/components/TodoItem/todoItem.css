@@ -4,6 +4,7 @@
     background-color: #fff;
     padding: 10px;
     position: relative;
+    min-height: 132px;
 }
 
 .todoItemWrap {
@@ -38,4 +39,29 @@
 .todoItemEdit img,
 .todoItemDelete img{
     width: 18px;
+}
+
+
+.todoItem input,
+.todoItem select {
+    width: 90%;
+    padding: 10px;
+}
+
+.btnContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.btnContainer button {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+    width: 40%;
+    font-weight: bold;
+    margin-right: 15px;
+    font: 16px 'Montserrat', sans-serif;
+    margin-top: 10px;
 }

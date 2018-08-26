@@ -60,29 +60,24 @@ class Header extends React.Component {
         });
         return result;
     }
+
     render() {
         const { text, pieChartData } = this.state;
         return (
             <header className={style.header}>
                 <img src="http://icons-for-free.com/free-icons/png/512/1622833.png" alt="" />
-                <ul>
-                    <li>
-                        <form onSubmit={this.onSubmit}>
-                            <input
-                              type="text"
-                              placeholder="Add task"
-                              value={text}
-                              onChange={event => this.setState({ text: event.target.value })}
-                            />
-                            <button type="submit">
-                                Add
-                            </button>
-                        </form>
-                    </li>
-                    <li>
-                        <PieChartTodo data={pieChartData} />
-                    </li>
-                </ul>
+                <form onSubmit={this.onSubmit}>
+                    <input
+                      type="text"
+                      placeholder="Add task"
+                      value={text}
+                      onChange={event => this.setState({ text: event.target.value })}
+                    />
+                    <button type="submit">
+                        Add
+                    </button>
+                </form>
+                <PieChartTodo data={pieChartData} />
             </header>
         );
     }

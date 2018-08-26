@@ -1,11 +1,13 @@
-const VisibilityFilter = (state="ALL", action) => {
+const VisibilityFilter = (state = 'SHOW_ALL', action) => {
     switch (action.filter) {
         case 'SHOW_COMPLETED':
-            return state = 'COMPLETED';
+            return action.filter;
         case 'SHOW_ACTIVE':
-            return state = 'ACTIVE';
+            return action.filter;
+        case 'SHOW_ALL':
+            return action.filter;
         default:
-            return state = 'ALL';
+            return state;
     }
 };
 export default VisibilityFilter;
